@@ -5,8 +5,8 @@ const port = 3000
 require('dotenv').config()
 
 const mongoose = require('mongoose');
-console.log(process.env.myDB);
-mongoose.connect(process.env.myDB);
+console.log(process.env.MONGODB_URI);
+mongoose.connect(process.env.MONGODB_URI);
 
 const Cat = mongoose.model('Cat', { name: String });
 
