@@ -1,22 +1,19 @@
 const express = require('express')
+const mongoose = require('mongoose')
 const app = express()
 const port = 3000
-
 require('dotenv').config()
-
-const mongoose = require('mongoose');
-console.log(process.env.MONGODB_URI);
-mongoose.connect(process.env.MONGODB_URI);
-
-const Cat = mongoose.model('Cat', { name: String });
-
-
 
 app.use('/', express.static('public'))
 
-app.get('/hello', (req, res) => {
-  res.send('Привет!')
-})
+mongoose.connect(process.env.MONGODB_URI)
+const Weather = mongoose.model('Weather', {
+  date: String,
+  city: String,
+  weather: String,
+  temp: String,
+ });
+
 
 app.get('/api/weather', async (req, res) => {
     let lat = req.query.lat
@@ -24,27 +21,26 @@ app.get('/api/weather', async (req, res) => {
     let APIkey = 'cc27a8d46f99850e0959f18b5fe7a4b4'
     let resWeather = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${APIkey}&lang=ru`)
     let resWeatherJson = await resWeather.json()
-    res.json({
-      'city': resWeatherJson.name,
-      'weather': resWeatherJson.weather[0].description,
-      'temp': resWeatherJson.main.temp,
-      'humidity': resWeatherJson.main.humidity,
-      'pressure': resWeatherJson.main.pressure,
-      'speed': resWeatherJson.wind.speed,
-      'icon': resWeatherJson.weather[0].icon
-    })
 
-    const kitty = new Cat({ name: 'Zildjian' });
-    kitty.save().then(() => console.log('meow'));
+    let temp = Math.round(resWeatherJson.main.temp - 273)
+    let city = resWeatherJson.name
+    let weather = resWeatherJson.weather[0].description
+    let date = new Date()
 
-  })
+    const newWeather = new Weather({
+      'date': date,
+      'city': city,
+      'weather': weather,
+      'temp': temp
+    });
+    await newWeather.save()
+    res.json(newWeather)
+})
 
-  app.get('/api/log', async (req, res) => {
-
-    let cats = await Cat.find()
-
-    res.json(cats)
-  })
+app.get('/api/log', async (req, res) => {
+  let log = await Weather.find()
+res.json(log)
+})
 
 app.listen(port, () => {
   console.log(`Example app listening on http://localhost:${port}`)

@@ -10,7 +10,6 @@ loadButton.onclick = () => {
 
         let res = await fetch(`api/weather?lat=${latitude}&lon=${longitude}`)
         let resJson = await res.json()
-
         console.log(resJson)
 
         let name = document.getElementById('name')
@@ -20,22 +19,22 @@ loadButton.onclick = () => {
         weather.innerText = 'Сейчас ' + resJson.weather
 
         let temp = document.getElementById('temp')
-        temp.innerText = 'Температура: ' + Math.round(resJson.temp - 273) + ' C'
+        temp.innerText = 'Температура: ' + resJson.temp + ' C'
 
-        let hum = document.getElementById('hum')
-        hum.innerText = 'Влажность: ' + resJson.humidity + ' %'
+        let reslog = await fetch('api/log')
+        let reslogJson = await reslog.json()
+        console.log(reslogJson)
 
-        let press = document.getElementById('press')
-        press.innerText = 'Давление: ' + Math.round(resJson.pressure / 1.33321995)  + ' мм. рт. ст.'
-
-        let wind = document.getElementById('wind')
-        wind.innerText = 'Ветер: ' + resJson.speed  + ' м/сек'
-
-        let picture_bg = document.getElementById('picture-bg')
-        picture_bg.classList.toggle('display-none')
-
-        let picture = document.getElementById('picture')
-        picture.src = `https://openweathermap.org/img/wn/${resJson.icon}@2x.png`
+        let logElement = document.getElementById('log')
+        let logString = '<div> История наблюдений за погодой </div> <div> --- </div> '
+        
+        for (const weatherLog of reslogJson) {
+            logString += 
+            `<div>${weatherLog.date}</div>
+            <div>${weatherLog.city},    ${weatherLog.weather},   температура: ${weatherLog.temp} C </div>
+            <div> --- </div>`    
+        }
+        logElement.innerHTML = logString
         
       }
     

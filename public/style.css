@@ -2,10 +2,10 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    max-width: 1080px;
+    /* max-width: 1080px; */
     width: 100%;
     height: 100vh;
-    background-image: url(https://i.pinimg.com/736x/20/86/f4/2086f489271daf8123cbdea78ac0eea5.jpg);
+    background-image: url(https://i0.wp.com/def4onki.ru/wp-content/uploads/2020/12/earth-cloud-53437-scaled.jpg?w=2048&ssl=1);
 }
 
 .button {
@@ -13,7 +13,7 @@
     display: flex;
     /* align-items: center;
     justify-content: center; */
-    margin-top: 10%;
+    margin-top: 3%;
     background-color: navy;
     border-color: wheat;
     border: ridge;
@@ -26,7 +26,7 @@
 .text-Button {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: larger;
-    margin-top: 4%;
+    margin-top: 2%;
     /* display: flex;
     align-items: center;
     justify-content: center; */
@@ -35,31 +35,11 @@
     margin-right: auto;
     width: 8em;
 }
-.picture-bg {
-    display: flex;
-    margin-top: 10%;
-    /* background-color: navy; */
-    border: ridge;
-    border-radius: 5px;
-    width: 150px;
-    height: 150px;
-    padding: 3px;
-    display: none;
-}
-.display-none {
-    display: inline;
-}
 
-.picture {
-    display: flex;
-    width: 150px;
-    margin-left: auto;
-    margin-right: auto;
-}
 .city {
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: medium;
-    margin-top: 100px;
+    margin-top: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -68,26 +48,22 @@
 
 .weather {
     color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: medium;
  
 }
 
 .temp {
-    color: navy;
-    font-size: large; 
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: medium;
+    margin-bottom: 30px; 
 }
 
-.hum {
-    color: navy;
+.log-font {
+    color: bisque;
     font-size: large;
-}
-
-.press {
-    color: navy;
-    font-size: large;
-}
-
-.wind {
-    color: navy;
-    font-size: large;  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
