@@ -2,6 +2,16 @@ const express = require('express')
 const app = express()
 const port = 3000
 
+require('dotenv').config()
+
+const mongoose = require('mongoose');
+console.log(process.env.myDB);
+mongoose.connect(process.env.myDB);
+
+const Cat = mongoose.model('Cat', { name: String });
+
+
+
 app.use('/', express.static('public'))
 
 app.get('/hello', (req, res) => {
@@ -23,6 +33,17 @@ app.get('/api/weather', async (req, res) => {
       'speed': resWeatherJson.wind.speed,
       'icon': resWeatherJson.weather[0].icon
     })
+
+    const kitty = new Cat({ name: 'Zildjian' });
+    kitty.save().then(() => console.log('meow'));
+
+  })
+
+  app.get('/api/log', async (req, res) => {
+
+    let cats = await Cat.find()
+
+    res.json(cats)
   })
 
 app.listen(port, () => {
